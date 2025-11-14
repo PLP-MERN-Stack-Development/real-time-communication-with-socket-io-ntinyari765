@@ -1,18 +1,22 @@
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
-const URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
-export const socket = io(URL, { autoConnect: false });
+const URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
+let socket;
+let username = "";
+let room = "";
 
-export function connectSocket() {
-  if (!socket.connected) socket.connect();
-  socket.on('connect', () => {
-    console.log('connected to server:', socket.id);
-    socket.emit('client:hello', { msg: 'hi server!', time: Date.now() });
-  });
-  socket.on('server:hello', (data) => {
-    console.log('server says:', data);
-  });
-  socket.on('disconnect', (reason) => {
-    console.log('socket disconnected:', reason);
-  });
-}
+export const connectSocket = () => {
+  username = prompt("Enter your username") || "Anonymous";
+  room = prompt("Enter room name") || "General";
+  socket = io(URL, { query: { username, room } });
+
+  socket.on("connect", () => 
+    console.log("Connected as", username, "to room", room)
+  );
+};
+
+export const getSocket = () => socket;
+export const getUsername = () => username;
+export const getRoom = () => room;
+
+

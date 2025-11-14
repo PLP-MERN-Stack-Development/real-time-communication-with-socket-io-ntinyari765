@@ -1,13 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import { connectSocket } from './socket/socket'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { connectSocket } from "./socket/socket";
+import "./index.css";
 
-connectSocket() // connect as app boots
+connectSocket();
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+
 
